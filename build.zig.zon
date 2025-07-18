@@ -1,0 +1,19 @@
+.{
+    .name = .littlefs,
+    .version = "2.11.1",
+    .fingerprint = 0xa5eec7a472ccfc40,
+    .minimum_zig_version = "0.14.1",
+    .dependencies = .{
+        .littlefs = .{
+            .url = "https://github.com/littlefs-project/littlefs/archive/refs/tags/v2.11.1.tar.gz",
+            .hash = "1220ce447cb3a673a1b86ffdcc93cd9770859f494c186758c8cedc726abd71fb92c9",
+        },
+    },
+
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "LICENSE",
+        "README.md",
+    },
+}
