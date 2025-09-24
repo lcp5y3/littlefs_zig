@@ -5,11 +5,13 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const littlefs = b.addStaticLibrary(.{
+    const littlefs = b.addLibrary(.{
         .name = "littlefs",
-        .target = target,
-        .optimize = optimize,
-        .link_libc = true,
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+            .link_libc = true,
+        }),
     });
 
     littlefs.addCSourceFile(.{
