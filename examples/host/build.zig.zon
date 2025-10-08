@@ -4,7 +4,7 @@
     .fingerprint = 0x6eec9b9f8f7ff33d,
     .minimum_zig_version = "0.15.1",
     .dependencies = .{
-        .littlefs = .{ .path = "../" },
+        .littlefs = .{ .path = "../.." },
     },
 
     .paths = .{
