@@ -17,13 +17,25 @@ pub fn build(b: *std.Build) void {
     });
     const resolved_zig_target = b.resolveTargetQuery(fw.target.zig_target);
 
-    const littlefs_dep = b.dependency("littlefs", .{
-        .optimize = optimize,
-        .target = resolved_zig_target,
-    });
-
-    // const foundation_dep = mz_dep.builder.dependency("modules/foundation-libc", .{});
     const foundation_dep = b.dependency("foundationlibc", .{
         .target = resolved_zig_target,
         .optimize = optimize,
     });
+
+    const littlefs_dep = b.dependency("littlefs", .{
+        .optimize = optimize,
+        .target = resolved_zig_target,
+        .stdlib = false,
+        .stdlib_header = foundation_dep.path("include"),
+        .log_enable = false,
+        .malloc_enable = false,
+    });
+
+    const littlefs_mod = littlefs_dep.module("lfs");
+    littlefs_mod.linkLibrary(foundation_dep.artifact("foundation"));
+
+    fw.app_mod.addImport("lfs", littlefs_mod);
+
+    mb.install_firmware(fw, .{});
+    mb.install_firmware(fw, .{ .format = .elf });
+}
